@@ -267,19 +267,8 @@
 
         (async () => {
         try {
-            const mediaRes = await fetch(
-            
-            'https://raw.githubusercontent.com/gaf-luis/map_data/main/test_gaffel_map_data.json',);
-            
-            const mediaItems = await mediaRes.json();
-
-            if (!mediaItems.length) {
-            throw new Error("map_data.json not found");
-            }
-
-            const jsonUrl = mediaItems[0].source_url;
-
-            fetch(jsonUrl)
+        
+            fetch('https://raw.githubusercontent.com/gaf-luis/map_data/main/test_gaffel_map_data.json')
                 .then(res => res.json())
                 .then(locations => {
             locations.forEach(loc => {
