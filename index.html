@@ -169,12 +169,10 @@
 </head>
 
 <body>
-   <div class="controls-wrapper">
-  <div class="controls" id="controls"></div>
-  <div class="controls" id="controls3"></div>
+    <div class="controls-wrapper">
+    <div class="controls" id="controls"></div>
 </div>
     
-
     <div id="map"></div>
     
     <script>
@@ -194,7 +192,8 @@
             maxZoom: 19,
             updateWhenZooming: false,
             updateWhenIdle: false,
-            keepBuffer: 4
+            keepBuffer: 4,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
         }).addTo(map);
 
         const cluster = L.markerClusterGroup({
@@ -232,34 +231,43 @@
                     .map(cb => cb.dataset.level2)
             );
 
-            const selectedProducts = new Set(
-                Array.from(document.querySelectorAll('#controls3 input[data-product]:checked'))
-                    .map(cb => cb.dataset.product)
-            );
 
             // If a group has nothing selected, treat as "no restriction" for that group
             const restrictLevel2 = selectedLevel2.size > 0;
-            const restrictProducts = selectedProducts.size > 0;
 
             // With 7k markers, scanning allMarkers is totally fine and keeps logic simple.
             for (const m of allMarkers) {
                 const meta = m._meta || {};
                 if (restrictLevel2 && !selectedLevel2.has(meta.level_2)) continue;
 
-                if (restrictProducts) {
-                    const prods = meta.products || [];
-                    // OR logic: marker is shown if it has at least one of the selected products available
-                    let ok = false;
-                    for (const p of selectedProducts) {
-                        if (prods.includes(p)) { ok = true; break; }
-                    }
-                    if (!ok) continue;
-                }
 
                 cluster.addLayer(m);
             }
         }
 
+        function buildControlsAndShow (){
+            const controlsDiv = document.getElementById('controls');
+
+        // --- Filter 1: Level_2 ---
+        Object.keys(markersByValues).sort().forEach(value => {
+            const label = document.createElement('label');
+            label.className = 'control-item';
+
+            label.innerHTML = `
+                <input type="checkbox" data-level2="${value}">
+                <span class="label-text">${value}</span>
+            `;
+            controlsDiv.appendChild(label);
+        });
+
+       
+        document.querySelectorAll('#controls input, #controls2 input, #controls3 input').forEach(cb => {
+            cb.addEventListener('change', applyFilters);
+        });
+        // initial render
+        applyFilters();
+
+        }
 
         const markersByValues = {};
         const markersByProducts = {};
@@ -267,10 +275,11 @@
 
         (async () => {
         try {
-        
-            fetch('https://raw.githubusercontent.com/gaf-luis/map_data/main/test_gaffel_map_data.json')
-                .then(res => res.json())
-                .then(locations => {
+            
+            const res = await fetch("https://raw.githubusercontent.com/gaf-luis/map_data/main/test_gaffel_map_data.json");
+            console.log("status", res.status, res.ok);
+            const locations = await res.json();
+                    
             locations.forEach(loc => {
 
                     const icon =
@@ -312,58 +321,23 @@
                     marker._meta = { level_2: filter_criteria, products: availableProducts };
                     allMarkers.push(marker);
 
-                    availableProducts.forEach(p => {
-                        if (!(p in markersByProducts)) { markersByProducts[p] = [];}
-                        markersByProducts[p].push(marker);
-                    });
 
-                    if (!(filter_criteria in markersByValues)) { { 
+                    if (!(filter_criteria in markersByValues)) {  
                         markersByValues[filter_criteria]=[]          
                     }
                     markersByValues[filter_criteria].push(marker);
          
-            }
+                    
             })
-        })
-
+            
+buildControlsAndShow();
             } catch (err) {
                 console.error("Failed to load map data:", err);
             }
         })();
 
-        const controlsDiv = document.getElementById('controls');
-        const controlsDiv3 = document.getElementById('controls3');
 
-        // --- Filter 1: Level_2 ---
-        Object.keys(markersByValues).sort().forEach(value => {
-            const label = document.createElement('label');
-            label.className = 'control-item';
-
-            label.innerHTML = `
-                <input type="checkbox" data-level2="${value}">
-                <span class="label-text">${value}</span>
-            `;
-            controlsDiv.appendChild(label);
-        });
-
-        // --- Filter 3: Produkt-Verfügbarkeit (nur "Verfügbar") ---
-        Object.keys(markersByProducts).forEach(product => {
-            const label = document.createElement('label');
-            label.className = 'control-item';
-
-            label.innerHTML = `
-                <input type="checkbox" data-product="${product}">
-                <span class="label-text">${product}</span>
-            `;
-            controlsDiv3.appendChild(label);
-        });
-
-        // initial render
-        applyFilters();
-
-        document.querySelectorAll('#controls input, #controls2 input, #controls3 input').forEach(cb => {
-            cb.addEventListener('change', applyFilters);
-        });
+       
 </script>
 </body>
 </html>
