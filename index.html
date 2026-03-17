@@ -44,22 +44,16 @@
       width: 100%;
     }
 
-    .controls-wrapper {
-        position: absolute;
-        top: 20px;
-        left: 60px;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        z-index: 1000;
-    }
-
-    .controls {
-        background: #00263e;
-        padding: 8px;
-        border-radius: 8px;
-        border: 3px solid #000;
-        width: fit-content;
+    #controls {
+      padding: 8px;
+      background: rgb(0, 0, 0);
+      position: absolute;
+      width: fit-content;
+      left: 60px;
+      z-index: 1000;
+      margin: 10px;
+      border-radius: 8px;
+      border: 3px solid #00703c;
     }
     
     .marker-legend {
@@ -169,9 +163,26 @@
 </head>
 
 <body>
-    <div class="controls-wrapper">
-    <div class="controls" id="controls"></div>
-</div>
+
+     <div id="controls">
+        <label class="control-item" style="margin-bottom: 0px;">
+            <input type="checkbox" id="gastronomie" checked>
+            <span class="label-text">Gastronomie</span>
+            <img
+            src="https://raw.githubusercontent.com/gaf-luis/map_data/main/gaffel_marker_small_g.png"
+            alt="Gastronomie Marker"
+            class="marker-legend">
+        </label>
+
+        <label class="control-item">
+            <input type="checkbox" id="handel" checked>
+            <span class="label-text">Handel</span>
+            <img
+            src="https://raw.githubusercontent.com/gaf-luis/map_data/main/gaffel_marker_small_g.png",
+            alt="Handel Marker"
+            class="marker-legend">
+        </label>
+   
     
     <div id="map"></div>
     
@@ -209,6 +220,9 @@
 
         cluster.addTo(map);
 
+         const markersByType = {};
+        const allMarkers = [];
+
         const customIcon_red = L.icon({
             iconUrl: 'https://raw.githubusercontent.com/gaf-luis/map_data/main/gaffel_marker_small_g.png',
             iconSize: [25, 39],
@@ -223,55 +237,13 @@
             popupAnchor: [0, -24]
         });
 
-        function applyFilters() {
-            cluster.clearLayers();
-
-            const selectedLevel2 = new Set(
-                Array.from(document.querySelectorAll('#controls input[data-level2]:checked'))
-                    .map(cb => cb.dataset.level2)
-            );
-
-
-            // If a group has nothing selected, treat as "no restriction" for that group
-            const restrictLevel2 = selectedLevel2.size > 0;
-
-            // With 7k markers, scanning allMarkers is totally fine and keeps logic simple.
-            for (const m of allMarkers) {
-                const meta = m._meta || {};
-                if (restrictLevel2 && !selectedLevel2.has(meta.level_2)) continue;
-
-
-                cluster.addLayer(m);
-            }
+        function toggleLayer(type, show) {
+            markersByType[type].forEach(marker => {
+                show ? cluster.addLayer(marker) : cluster.removeLayer(marker);
+            });
         }
-
-        function buildControlsAndShow (){
-            const controlsDiv = document.getElementById('controls');
-
-        // --- Filter 1: Level_2 ---
-        Object.keys(markersByValues).sort().forEach(value => {
-            const label = document.createElement('label');
-            label.className = 'control-item';
-
-            label.innerHTML = `
-                <input type="checkbox" data-level2="${value}">
-                <span class="label-text">${value}</span>
-            `;
-            controlsDiv.appendChild(label);
-        });
 
        
-        document.querySelectorAll('#controls input, #controls2 input, #controls3 input').forEach(cb => {
-            cb.addEventListener('change', applyFilters);
-        });
-        // initial render
-        applyFilters();
-
-        }
-
-        const markersByValues = {};
-        const markersByProducts = {};
-        const allMarkers = [];
 
         (async () => {
         try {
@@ -290,11 +262,6 @@
                     const address = loc.kombi_addr;
 
                     const filter_criteria = loc.absatzweg
-
-                    const availableProducts = String(loc.verfuegbare_produkte || "")
-                        .split(",")
-                        .map(p => p.trim())
-                        .filter(Boolean);
 
                     const marker = L.marker([loc.lat, loc.lng], { icon: icon })
                     .bindPopup(`
@@ -317,27 +284,28 @@
                         </div>
                     `);
                     
-                    // Attach metadata so filters can work fast
-                    marker._meta = { level_2: filter_criteria, products: availableProducts };
                     allMarkers.push(marker);
 
 
-                    if (!(filter_criteria in markersByValues)) {  
-                        markersByValues[filter_criteria]=[]          
+                    if (!(filter_criteria in markersByType)) {  
+                        markersByType[filter_criteria]=[]          
                     }
-                    markersByValues[filter_criteria].push(marker);
-         
-                    
+                    markersByType[filter_criteria].push(marker);
             })
-            
-buildControlsAndShow();
+        cluster.addLayers(allMarkers);
             } catch (err) {
                 console.error("Failed to load map data:", err);
             }
         })();
 
+        document.getElementById("gastronomie").addEventListener("change", e =>
+            toggleLayer("Gastronomie", e.target.checked)
+        );
 
-       
+        document.getElementById("handel").addEventListener("change", e =>
+            toggleLayer("Handel", e.target.checked)
+        );
+
 </script>
 </body>
 </html>
