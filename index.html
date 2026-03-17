@@ -220,7 +220,7 @@
 
         cluster.addTo(map);
 
-         const markersByType = {};
+        const markersByType = {};
         const allMarkers = [];
 
         const customIcon_red = L.icon({
@@ -237,13 +237,23 @@
             popupAnchor: [0, -24]
         });
 
-        function toggleLayer(type, show) {
-            markersByType[type].forEach(marker => {
-                show ? cluster.addLayer(marker) : cluster.removeLayer(marker);
-            });
-        }
+        function updateVisibleMarkers() {
+    const showGastronomie = document.getElementById("gastronomie").checked;
+    const showHandel = document.getElementById("handel").checked;
 
-       
+    const visibleMarkers = [];
+
+    if (showGastronomie && markersByType["Gastronomie"]) {
+        visibleMarkers.push(...markersByType["Gastronomie"]);
+    }
+
+    if (showHandel && markersByType["Handel"]) {
+        visibleMarkers.push(...markersByType["Handel"]);
+    }
+
+    cluster.clearLayers();
+    cluster.addLayers(visibleMarkers);
+}
 
         (async () => {
         try {
@@ -292,19 +302,18 @@
                     }
                     markersByType[filter_criteria].push(marker);
             })
-        cluster.addLayers(allMarkers);
+
+            cluster.addLayers(allMarkers);
+
             } catch (err) {
                 console.error("Failed to load map data:", err);
             }
         })();
 
-        document.getElementById("gastronomie").addEventListener("change", e =>
-            toggleLayer("Gastronomie", e.target.checked)
-        );
+       document.getElementById("gastronomie").addEventListener("change", updateVisibleMarkers);
+document.getElementById("handel").addEventListener("change", updateVisibleMarkers);
 
-        document.getElementById("handel").addEventListener("change", e =>
-            toggleLayer("Handel", e.target.checked)
-        );
+updateVisibleMarkers();
 
 </script>
 </body>
