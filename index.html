@@ -14,15 +14,15 @@
 
     <style>
     @font-face {
-      font-family: "Barlow-Regular";
-      src: url("https://muehlenkoelsch.de/wp-content/uploads/2024/09/Barlow-Regular.woff2") format("woff2");
-      font-display: swap;
+        font-family: "HelveticaNeueLtCom-Roman";
+        src: url("https://gaffel.de/wp-content/themes/Divi-Child-Theme/fonts/HelveticaNeueLTCom-Roman.ttf") format("truetype");
+        font-display: swap;
     }
 
      @font-face {
-      font-family: "Acumin Variable";
-      src: url("https://muehlenkoelsch.de/wp-content/uploads/2025/09/AcuminPro-Bold.woff2") format("woff2");
-      font-display: swap;
+        font-family: "HelveticaNeueLtCom-Bold";
+        src: url("https://gaffel.de/wp-content/themes/Divi-Child-Theme/fonts/HelveticaNeueLTCom-Bd.ttf") format("truetype");
+        font-display: swap;
     }
 
     html, body {
@@ -30,13 +30,13 @@
       width: 100%;
       margin: 0;
       padding: 0;
-      font-family: "Acumin Variable", sans-serif;
+      font-family: "HelveticaNeueLtCom-Roman", Helvetica, sans-serif;
       font-size: 18px;
     }
 
     .leaflet-popup-content,
     .leaflet-popup-content-wrapper {
-        font-family: "Barlow-Regular", sans-serif;
+        font-family: "HelveticaNeueLtCom-Roman", Helvetica, sans-serif;
     }
 
     #map {
@@ -44,16 +44,40 @@
       width: 100%;
     }
 
+    #control-panel {
+        background: #00263e;;
+        position: absolute;
+        width: fit-content;
+        left: 60px;
+        z-index: 1000;
+        margin: 10px;
+        border-radius: 8px;
+        border: 3px solid #00174c;
+        width: max-content;
+        overflow: hidden;
+
+    }
+
+    #control-logo {
+        text-align: center;
+        padding: 0px 10px;
+        margin: 0;
+        box-sizing: border-box;
+        width: 100%;
+        line-height: 0;
+        background: #00174c;
+    }
+
+    #map-logo {
+    width: 180px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    }
+
     #controls {
       padding: 8px;
-      background: rgb(0, 0, 0);
-      position: absolute;
-      width: fit-content;
-      left: 60px;
-      z-index: 1000;
-      margin: 10px;
-      border-radius: 8px;
-      border: 3px solid #00703c;
+      background:#ffffff
     }
     
     .marker-legend {
@@ -61,7 +85,7 @@
         height: 31px;
         display: block;
         object-fit: contain;
-        margin-top: 2px;
+        margin-top: 1px;
         margin-left: 4px;
         transform: translateY(-2px);
     }
@@ -79,15 +103,15 @@
     }
 
     .label-text {
+        font-weight: bold;
         display: block;
         line-height: normal;
-        padding-top: 0.2em;
-        color:#F8F8F8;
+        padding-top: 0.1em;
+        color:#00174c;
         margin-left: 8px;
     }
 
     .popup-name {
-        font-family: "Acumin Variable", sans-serif;
         font-size: 18px;
         font-weight: bold;
         line-height: 1;    
@@ -100,13 +124,12 @@
     }
 
     .popup-sorten {
-        font-family: "Acumin Variable", sans-serif;
         background: #f8f8f8;
         border-radius: 6px;
         padding: 6px 8px;
         margin-bottom: 10px;
         line-height: 1.4;
-        border-left: 4px solid #00263e;
+        border-left: 4px solid rgb(0, 23, 76);
     }
     
     .popup-route {
@@ -125,34 +148,44 @@
 
     .status-ok {
         color: #00703c;
-        font-family: "Barlow-Regular", sans-serif;
     }
 
     .status-no {
         color: #c62828;
-        font-family: "Barlow-Regular", sans-serif;
     }
 
     .marker-cluster-small,
     .marker-cluster-medium,
     .marker-cluster-large {
-        background-color: #fffaee !important;
+        background-color:rgb(0, 23, 76, 0.3) !important;
     }
 
     .marker-cluster div {
-        background-color: #00263e !important;
-        color: white !important;
-        font-family: "Acumin Variable", sans-serif;
+        background-color: rgb(0, 23, 76, 0.8) !important;
+
+        color: rgb(255, 255, 255) !important;
+       
+
         font-weight: bold; 
     }
 
-    .leaflet-marker-pane
-    {
+    .leaflet-marker-pane{
         transition: opacity 0.15s ease-out;
     }
 
+    .leaflet-tile {
+        border: 0 !important;
+        outline: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .leaflet-tile-container {
+        will-change: transform;
+    }
+
     @media (max-width: 768px) {
-        #controls {
+        #control-panel
+         {
         left: 0;
         right: 0;
         margin-left: auto;
@@ -163,25 +196,35 @@
 </head>
 
 <body>
+    <div id="control-panel">
 
-     <div id="controls">
-        <label class="control-item" style="margin-bottom: 0px;">
-            <input type="checkbox" id="gastronomie" checked>
-            <span class="label-text">Gastronomie</span>
+        <div id="control-logo">
             <img
-            src="https://raw.githubusercontent.com/gaf-luis/map_data/main/gaffel_marker_small_g.png"
-            alt="Gastronomie Marker"
-            class="marker-legend">
-        </label>
+                src="https://raw.githubusercontent.com/gaf-luis/map_data/main/Gaffel%20Kölsch%20Logo%20einzeilig%20negativ%20blau.jpg"
+                alt="Gaffel Logo"
+                id="map-logo"
+            >
+        </div>
 
-        <label class="control-item">
-            <input type="checkbox" id="handel" checked>
-            <span class="label-text">Handel</span>
-            <img
-            src="https://raw.githubusercontent.com/gaf-luis/map_data/main/gaffel_marker_small_g.png",
-            alt="Handel Marker"
-            class="marker-legend">
-        </label>
+        <div id="controls">
+            <label class="control-item" style="margin-bottom: 0px;">
+                <input type="checkbox" id="gastronomie" checked>
+                <span class="label-text">Gastronomie</span>
+                <img
+                src="https://raw.githubusercontent.com/gaf-luis/map_data/main/new_marker_weiss_blau_5.png"
+                alt="Gastronomie Marker"
+                class="marker-legend">
+            </label>
+
+            <label class="control-item">
+                <input type="checkbox" id="handel" checked>
+                <span class="label-text">Handel</span>
+                <img
+                src="https://raw.githubusercontent.com/gaf-luis/map_data/main/new_marker_blau_weiss.png",
+                alt="Handel Marker"
+                class="marker-legend">
+            </label>
+        </div>
     </div>
     
     <div id="map"></div>
@@ -196,9 +239,6 @@
             inertia: true
         }).setView([50.94, 6.96], 12);
 
-        map.options.zoomSnap = 0.5;
-        map.options.zoomDelta = 0.5;
-
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             updateWhenZooming: false,
@@ -208,8 +248,8 @@
         }).addTo(map);
 
         const cluster = L.markerClusterGroup({
-            disableClusteringAtZoom: 15,
-            maxClusterRadius: 150, 
+            disableClusteringAtZoom: 14,
+            maxClusterRadius: 100, 
             spiderfyOnMaxZoom: false,
             showCoverageOnHover: false,
             zoomToBoundsOnClick: true,
@@ -223,17 +263,17 @@
         const markersByType = {};
         const allMarkers = [];
 
-        const customIcon_red = L.icon({
-            iconUrl: 'https://raw.githubusercontent.com/gaf-luis/map_data/main/gaffel_marker_small_g.png',
-            iconSize: [25, 39],
-            iconAnchor: [12.5, 39],
+        const marker_gastro = L.icon({
+            iconUrl: 'https://raw.githubusercontent.com/gaf-luis/map_data/main/new_marker_weiss_blau_5.png',
+            iconSize: [25, 42],
+            iconAnchor: [12.5, 41],
             popupAnchor: [0, -24]
         });
 
-        const customIcon_green = L.icon({
-            iconUrl: 'https://raw.githubusercontent.com/gaf-luis/map_data/main/gaffel_marker_small_g.png',
-            iconSize: [25, 39],
-            iconAnchor: [12.5, 39],
+        const marker_handel = L.icon({
+            iconUrl: 'https://raw.githubusercontent.com/gaf-luis/map_data/main/new_marker_blau_weiss.png',
+            iconSize: [25, 42],
+            iconAnchor: [12.5, 41],
             popupAnchor: [0, -24]
         });
 
@@ -258,7 +298,7 @@
         (async () => {
         try {
             
-            const res = await fetch("https://raw.githubusercontent.com/gaf-luis/map_data/main/test_gaffel_map_data.json");
+            const res = await fetch("https://raw.githubusercontent.com/gaf-luis/map_data/refs/heads/main/test_gaffel_map_data%20(16).json");
             console.log("status", res.status, res.ok);
             const locations = await res.json();
                     
@@ -266,8 +306,8 @@
 
                     const icon =
                     loc.absatzweg === "Gastronomie"
-                        ? customIcon_red
-                        : customIcon_green;
+                        ? marker_gastro
+                        : marker_handel;
 
                     const address = loc.kombi_addr;
 
