@@ -162,10 +162,7 @@
 
     .marker-cluster div {
         background-color: rgb(0, 23, 76, 0.8) !important;
-
         color: rgb(255, 255, 255) !important;
-       
-
         font-weight: bold; 
     }
 
@@ -234,10 +231,12 @@
 
         const map = L.map('map', {
             preferCanvas: true,
-            fadeAnimation: !isMobile,
-            markerZoomAnimation: !isMobile,
+            //fadeAnimation: !isMobile,
+            //markerZoomAnimation: !isMobile,
             inertia: true
         }).setView([50.94, 6.96], 12);
+
+        
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
