@@ -195,7 +195,6 @@
     @media (max-width: 768px) {
 
         #control-panel {
-            top:5px;
             left: 50%;
             transform: translateX(-50%);
             border: 3px solid #001c48;
@@ -203,12 +202,11 @@
             display: inline-flex;
             flex-direction: row ;
             align-items: stretch;
-            height: 50px
         }
 
         #control-logo {
             background: #001c48;
-            padding:  10px;
+            padding: 0 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -228,32 +226,26 @@
         }
 
         #controls {
-            padding: 8px;
+            padding: 8px 8px;
             display: flex;
-            min-width: 180px;
+            flex-direction: column;
+            justify-content: center;
+            
         }
 
         .control-item {
-            padding: 0px 15px;
-            gap: 2px;
+            padding: 0px 0px;
+            gap: 0px;
         }
 
         .marker-legend {
             width: 19px;
             height: auto;
             margin-top: 0px;
-            margin-left: 4px;
+            margin-left: 6px;
             transform: translateY(-1px);
         }
-        .label-text {
-            font-weight: bold;
-            display: block;
-            line-height: normal;
-            padding-top: 0.1em;
-            color:#00174c;
-            margin-left: 4px;
-        }
-    }
+}
     </style>
 </head>
 
