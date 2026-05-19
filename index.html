@@ -187,6 +187,8 @@
         right: 0;
         margin-left: auto;
         margin-right: auto;
+        transform: scale(0.80);
+        transform-origin: top right;
         }
     }
     </style>
@@ -208,7 +210,7 @@
                 <input type="checkbox" id="gastronomie" checked>
                 <span class="label-text">Gastronomie</span>
                 <img
-                src="https://raw.githubusercontent.com/gaf-luis/map_data/main/new_marker_weiss_blau_5.png"
+                src="https://raw.githubusercontent.com/gaf-luis/map_data/main/Gaffel_Marker_blau.png"
                 alt="Gastronomie Marker"
                 class="marker-legend">
             </label>
@@ -217,7 +219,7 @@
                 <input type="checkbox" id="handel" checked>
                 <span class="label-text">Handel</span>
                 <img
-                src="https://raw.githubusercontent.com/gaf-luis/map_data/main/new_marker_blau_weiss.png",
+                src="https://raw.githubusercontent.com/gaf-luis/map_data/main/Gaffel_Marker_weiss_4.png",
                 alt="Handel Marker"
                 class="marker-legend">
             </label>
@@ -263,14 +265,14 @@
         const allMarkers = [];
 
         const marker_gastro = L.icon({
-            iconUrl: 'https://raw.githubusercontent.com/gaf-luis/map_data/main/new_marker_weiss_blau_5.png',
+            iconUrl: 'https://raw.githubusercontent.com/gaf-luis/map_data/main/Gaffel_Marker_blau.png',
             iconSize: [25, 42],
             iconAnchor: [12.5, 41],
             popupAnchor: [0, -24]
         });
 
         const marker_handel = L.icon({
-            iconUrl: 'https://raw.githubusercontent.com/gaf-luis/map_data/main/new_marker_blau_weiss.png',
+            iconUrl: 'https://raw.githubusercontent.com/gaf-luis/map_data/main/Gaffel_Marker_weiss_4.png',
             iconSize: [25, 42],
             iconAnchor: [12.5, 41],
             popupAnchor: [0, -24]
