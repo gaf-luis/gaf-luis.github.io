@@ -67,21 +67,25 @@
         background: #00174c;
     }
 
-    #map-logo {
-    width: 180px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    }
-
     #controls {
       padding: 8px;
       background:#ffffff
     }
-    
+
+    #map-logo {
+        width: 180px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+    #map-logo-mobile {
+        display: none;
+    }
+
     .marker-legend {
-        width: 21px;
-        height: 34px;
+        width: 20px;
+        height: auto;
         display: block;
         object-fit: contain;
         margin-top: 1px;
@@ -96,11 +100,17 @@
         cursor: pointer;
     }
 
+    .control-item:hover {
+        background: rgba(58, 96, 119, 0.08);
+        border-radius: 4px;
+}
+
     .control-item input[type="checkbox"] {
         cursor: pointer;
         flex: 0 0 auto;
+        accent-color: #0072bc;
     }
-
+    
     .label-text {
         font-weight: bold;
         display: block;
@@ -178,39 +188,71 @@
     .leaflet-tile-container {
         will-change: transform;
     }
+    
+
+
 
     @media (max-width: 768px) {
+
         #control-panel {
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 8px 0;
-    width: auto;
-    max-width: 60vw;
-  }
+            top:5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 3px solid #001c48;
+            overflow: hidden;
+            display: inline-flex;
+            flex-direction: row ;
+            align-items: stretch;
+            height: 50px
+        }
 
-  #map-logo {
-    max-width: 130px;
-    height: auto;
-  }
-  
+        #control-logo {
+            background: #001c48;
+            padding:  10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            flex: 0 0 auto;
+        }
 
-  #controls {
-    padding: 4px 8px;
-    font-size: 16px;
-  }
+        #map-logo-mobile {
+            width: 85px;
+            height: auto;
+            display: block;
+            margin: 0;
+        }
 
-  .control-item {
-    padding: 0px 5px;
-    gap: 0px;
-  }
+        #map-logo {
+            display: none;
+        }
 
-  .marker-legend {
-    width: 21px;
-    height: auto;
-    margin-top: 0px;
-    margin-left: 5px;
-    transform: translateY(-1px);
-  }
+        #controls {
+            padding: 8px;
+            display: flex;
+            min-width: 180px;
+        }
+
+        .control-item {
+            padding: 0px 15px;
+            gap: 2px;
+        }
+
+        .marker-legend {
+            width: 19px;
+            height: auto;
+            margin-top: 0px;
+            margin-left: 4px;
+            transform: translateY(-1px);
+        }
+        .label-text {
+            font-weight: bold;
+            display: block;
+            line-height: normal;
+            padding-top: 0.1em;
+            color:#00174c;
+            margin-left: 4px;
+        }
     }
     </style>
 </head>
@@ -223,6 +265,11 @@
                 src="https://raw.githubusercontent.com/gaf-luis/map_data/main/Gaffel%20Kölsch%20Logo%20einzeilig%20negativ%20blau.jpg"
                 alt="Gaffel Logo"
                 id="map-logo"
+            >
+            <img
+                src="https://gaffel.de/wp-content/uploads/2021/06/Gaffel-Logo-white.svg"
+                alt="Gaffel Logo"
+                id="map-logo-mobile"
             >
         </div>
 
