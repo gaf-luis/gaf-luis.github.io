@@ -68,7 +68,6 @@
         
         align-items: center;
         justify-content: center;
-     
         box-sizing: border-box;
         background: #ffffff;
         border: 1px solid rgba(255,255,255);
@@ -76,21 +75,22 @@
     }
 
 
-    #map-logo-corner {
+    #gaffel-logo {
         display: flex;
         align-items: center;
         justify-content: center;
         pointer-events: auto;
-
         transform: none;
         left: auto;
         top: auto;
-
     }
 
-    #map-logo-corner img {
+    #gaffel-logo-mobile {
+        display: none;
+    }
+
+    #gaffel-logo img {
         width: 120px;
-        
         height: auto;
     }
 
@@ -132,7 +132,7 @@
     .control-item:has(input[type="checkbox"]:checked) {
         background: #00174c;
         color: #ffffff; 
-         box-shadow: 0 8px 18px rgba(0, 23, 76, 0.08);
+        box-shadow: 0 8px 18px rgba(0, 23, 76, 0.08);
     }
 
     .marker-circle {
@@ -274,11 +274,16 @@
             display: none;
         }
 
-        #map-logo-corner img {
-            width: 80px;
-            height: auto;
-        }
 
+        #gaffel-logo-mobile {
+            bottom: 20px;
+            right: 16px;
+            display: flex;
+            position: absolute;
+            z-index: 1001;
+            pointer-events: auto;
+           
+        }
 
         #controls {
             display: flex;
@@ -325,7 +330,7 @@
 <body>
         <div id="control-panel">
     <div id="logo-container">
-        <div id="map-logo-corner">
+        <div id="gaffel-logo">
 
             <a href="https://gaffel.de" target="_blank" rel="noopener noreferrer">
                 <img
@@ -359,6 +364,18 @@
                 </label>
         </div>
     </div>
+
+    <div id="gaffel-logo-mobile">
+
+            <a href="https://gaffel.de" target="_blank" rel="noopener noreferrer">
+                <img
+                    src="https://gaffel.de/wp-content/uploads/2021/04/Gaffel-Logo.svg"
+                    alt="Gaffel Logo"
+                    id="map-logo-mobile2"
+                >
+            </a>
+
+        </div>
     
 
     
