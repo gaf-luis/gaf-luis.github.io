@@ -45,79 +45,142 @@
     }
 
     #control-panel {
-        background: #00263e;;
         position: absolute;
-        width: fit-content;
-        left: 60px;
+        top: 18px;
+        left: 50%;
+        transform: translateX(-50%);
         z-index: 1000;
-        margin: 10px;
-        border-radius: 8px;
-        border: 3px solid #00174c;
-        width: max-content;
-        overflow: hidden;
+        display: flex;
+        align-items: center;
+        border: 1px solid rgba(0,23,76,0.08);
+        box-shadow:
+            0 8px 32px rgba(0,0,0,0.08),
+            0 1px 3px rgba(0,0,0,0.05);
+                border-radius: 16px;
+        gap: 30px;
+        padding: 12px 20px;
+        background: #ffffff;
+        backdrop-filter: blur(20px);
+        
     }
 
-    #control-logo {
-        text-align: center;
-        padding: 0px 10px;
-        margin: 0;
+    #logo-container {
+        
+        align-items: center;
+        justify-content: center;
+     
         box-sizing: border-box;
-        width: 100%;
-        line-height: 0;
-        background: #00174c;
+        background: #ffffff;
+        border: 1px solid rgba(255,255,255);
+        border-radius: 16px;
+    }
+
+
+    #map-logo-corner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: auto;
+
+        transform: none;
+        left: auto;
+        top: auto;
+
+    }
+
+    #map-logo-corner img {
+        width: 120px;
+        
+        height: auto;
     }
 
     #controls {
-      padding: 8px;
-      background:#ffffff
-    }
-
-    #map-logo {
-        width: 180px;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-    }
-
-    #map-logo-mobile {
-        display: none;
-    }
-
-    .marker-legend {
-        width: 20px;
-        height: auto;
-        display: block;
-        object-fit: contain;
-        margin-top: 1px;
-        margin-left: 4px;
-        transform: translateY(-2px);
+        display: flex;
+        padding: 0;
+        gap: 20px;
     }
 
     .control-item {
-        display: flex;
+        position: relative;
+        display: inline-flex;
         align-items: center;
-        gap: 2px;
+        justify-content: center;
+        min-width: 140px;
+        height: 42px;
+        padding: 0 18px 0 48px;
+        border-radius: 10px;
+        background: #eceaea;
+        color: #000000;
+        border: 0;
         cursor: pointer;
+        user-select: none;
+        transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
     }
 
     .control-item:hover {
-        background: rgba(58, 96, 119, 0.08);
-        border-radius: 4px;
-}
+        background: #dfddde;
+        transform: none;
+        box-shadow: 0px 10px 22px rgba(0, 23, 76, 0.2);
+    }
 
     .control-item input[type="checkbox"] {
-        cursor: pointer;
-        flex: 0 0 auto;
-        accent-color: #0072bc;
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
     }
-    
-    .label-text {
-        font-weight: bold;
+
+    .control-item:has(input[type="checkbox"]:checked) {
+        background: #00174c;
+        color: #ffffff; 
+         box-shadow: 0 8px 18px rgba(0, 23, 76, 0.08);
+    }
+
+    .marker-circle {
+        position: absolute;
+        left: -11px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 3px solid #eceaea;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .control-item:has(input[type="checkbox"]:checked) .marker-circle {
+        background: #ffffff;
+        border-color: #00174c;
+    }
+
+    .marker-legend {
+        width: 21px;
+        height: auto;
         display: block;
-        line-height: normal;
-        padding-top: 0.1em;
-        color:#00174c;
-        margin-left: 8px;
+        object-fit: contain;
+        transform: translate(-0.5px);
+    }
+
+    .label-text {
+        font-family: "HelveticaNeueLtCom-Roman", Helvetica, sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+
+        letter-spacing: 0;
+        line-height: 1;
+        color: #000000;
+        margin: 0;
+        padding: 0;
+        white-space: nowrap;
+        transition: color 0.18s ease;
+    }
+
+    .control-item:has(input[type="checkbox"]:checked) .label-text {
+        color: #ffffff;
     }
 
     .popup-name {
@@ -190,101 +253,116 @@
     }
     
 
+    
 
 
     @media (max-width: 768px) {
-
         #control-panel {
+            top: 24px;
             left: 50%;
             transform: translateX(-50%);
-            border: 3px solid #001c48;
-            overflow: hidden;
-            display: inline-flex;
-            flex-direction: row ;
-            align-items: stretch;
-        }
-
-        #control-logo {
-            background: #001c48;
-            padding: 0 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            backdrop-filter: none;
+            padding: 0;
+            gap: 0;
             width: auto;
-            flex: 0 0 auto;
         }
 
-        #map-logo-mobile {
-            width: 85px;
-            height: auto;
-            display: block;
-            margin: 0;
-        }
-
-        #map-logo {
+        #logo-container {
             display: none;
         }
 
+        #map-logo-corner img {
+            width: 80px;
+            height: auto;
+        }
+
+
         #controls {
-            padding: 8px 8px;
             display: flex;
-            flex-direction: column;
+        
             justify-content: center;
-            
+            gap: 12px;
         }
 
         .control-item {
-            padding: 0px 0px;
-            gap: 0px;
+            min-width: 80px;
+            height: 36px;
+            padding: 0 13px 0 40px;
+            border-radius: 10px;
+        }
+
+        .marker-circle {
+            left: -9px;
+            width: 38px;
+            height: 38px;
+            border-width: 3px;
         }
 
         .marker-legend {
-            width: 19px;
-            height: auto;
-            margin-top: 0px;
-            margin-left: 6px;
-            transform: translateY(-1px);
+            width: 18px;
         }
-}
+
+        .label-text {
+            font-size: 13px;
+        }
+    }   
+
+    @media (max-width: 390px) {
+            #controls {
+                flex-direction: column;
+            }
+
+            .control-item{
+                justify-content: left;
+            }
+        }
+
     </style>
 </head>
 
 <body>
-    <div id="control-panel">
+        <div id="control-panel">
+    <div id="logo-container">
+        <div id="map-logo-corner">
 
-        <div id="control-logo">
-            <img
-                src="https://raw.githubusercontent.com/gaf-luis/map_data/main/Gaffel%20Kölsch%20Logo%20einzeilig%20negativ%20blau.jpg"
-                alt="Gaffel Logo"
-                id="map-logo"
-            >
-            <img
-                src="https://gaffel.de/wp-content/uploads/2021/06/Gaffel-Logo-white.svg"
-                alt="Gaffel Logo"
-                id="map-logo-mobile"
-            >
-        </div>
-
-        <div id="controls">
-            <label class="control-item" style="margin-bottom: 0px;">
-                <input type="checkbox" id="gastronomie" checked>
-                <span class="label-text">Gastronomie</span>
+            <a href="https://gaffel.de" target="_blank" rel="noopener noreferrer">
                 <img
-                src="https://raw.githubusercontent.com/gaf-luis/map_data/main/Gaffel_Marker_blau.png"
-                alt="Gastronomie Marker"
-                class="marker-legend">
-            </label>
+                    src="https://gaffel.de/wp-content/uploads/2021/04/Gaffel-Logo.svg"
+                    alt="Gaffel Logo"
+                    id="map-logo-mobile2"
+                >
+            </a>
 
-            <label class="control-item">
-                <input type="checkbox" id="handel" checked>
-                <span class="label-text">Handel</span>
-                <img
-                src="https://raw.githubusercontent.com/gaf-luis/map_data/main/Gaffel_Marker_weiss_4.png",
-                alt="Handel Marker"
-                class="marker-legend">
-            </label>
         </div>
     </div>
+
+
+            <div id="controls">
+                <label class="control-item" style="margin-bottom: 0px;">
+                    <input type="checkbox" id="gastronomie" checked>
+                    <span class="label-text">Gastronomie</span>
+                    <div class="marker-circle"><img
+                    src="https://raw.githubusercontent.com/gaf-luis/map_data/main/Gaffel_Marker_blau.png"
+                    alt="Gastronomie Marker"
+                    class="marker-legend"></div>
+                </label>
+
+                <label class="control-item">
+                    <input type="checkbox" id="handel" checked>
+                    <span class="label-text">Handel</span>
+                    <div class="marker-circle"><img
+                    src="https://raw.githubusercontent.com/gaf-luis/map_data/main/Gaffel_Marker_weiss_4.png",
+                    alt="Handel Marker"
+                    class="marker-legend"></div>
+                </label>
+        </div>
+    </div>
+    
+
+    
     
     <div id="map"></div>
     
