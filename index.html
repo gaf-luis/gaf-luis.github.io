@@ -61,7 +61,6 @@
         padding: 12px 20px;
         background: #ffffff;
         backdrop-filter: blur(20px);
-        
     }
 
     #logo-container {
@@ -276,7 +275,7 @@
 
         #gaffel-logo-mobile {
             bottom: 18px;
-            right: 12px;
+            right: 10px;
             display: flex;
             position: absolute;
             z-index: 1001;
@@ -372,13 +371,13 @@
 
             <a href="https://gaffel.de" target="_blank" rel="noopener noreferrer">
                 <img
-                    src="https://raw.githubusercontent.com/gaf-luis/map_data/main/Logo_7.png"
+                    src="https://gaffel.de/wp-content/uploads/2021/04/Gaffel-Logo.svg"
                     alt="Gaffel Logo"
                     id="map-logo-mobile2"
                 >
             </a>
 
-        </div>
+    </div>
     
 
     
@@ -390,6 +389,7 @@
 
         const map = L.map('map', {
             preferCanvas: true,
+            zoomControl: !L.Browser.mobile,
             //fadeAnimation: !isMobile,
             //markerZoomAnimation: !isMobile,
             inertia: true
